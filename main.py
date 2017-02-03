@@ -1,5 +1,6 @@
 import discord
 import asyncio
+from chatterbotapi import ChatterBotFactory, ChatterBotType
 
 client = discord.Client()
 
@@ -24,5 +25,28 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
 
+
+
+def startChatter():
+    factory = ChatterBotFactory()
+
+    bot1 = factory.create(ChatterBotType.CLEVERBOT)
+    bot1session = bot1.create_session()
+
+    s = 'Hi'
+    while (1):
+        print('bot1> ' + s)
+
+        s = bot1session.think(s)
+        print('bot2> ' + s)
+
+        s = bot1session.think(s)
+
+
+
+startChatter()
+
+
 #removed token
 client.run("Mjc2MTM4NDk5NTU0NjcyNjUx.C3ZRBw.AkKdtU5dE1yXzd5dilX_OVvmNSU")
+
