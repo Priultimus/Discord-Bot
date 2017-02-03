@@ -13,6 +13,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    me = client.user.name
     if message.content.startswith("!messages"):
         counter = 0
         tmp = await client.send_message(message.channel, 'Calculating messages...')
@@ -25,7 +26,8 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
 
-    elif message
+    elif message.content.startswith(""):
+        await client.send_message(message.channel, 'IT FINALLY WORKED')
 
 """
 @client.event
