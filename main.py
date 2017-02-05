@@ -10,10 +10,11 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    #print(str(client.user))
+
 
 @client.event
 async def on_message(message):
-    me = client.user.name
     if message.content.startswith("!messages"):
         counter = 0
         tmp = await client.send_message(message.channel, 'Calculating messages...')
@@ -26,14 +27,20 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
 
-    elif message.content.startswith(""):
-        await client.send_message(message.channel, 'IT FINALLY WORKED')
+    elif client.user.mentioned_in(message):
+        if str(message.author) == "Yakitrak#2464":
+            await client.send_message(message.channel, "Hey handsome!")
 
-"""
-@client.event
-async def mentioned_in(message):
-        await client.send_message(message.channel, "It worked")
-"""
+        elif str(message.author) == "SquiddyDude#1177":
+            await client.send_message(message.channel, "Why are you here, Guy?")
+
+    #elif message.mentions:
+        #await client.send_message(message.channel, "I am clearly the best bot")
+
+
+
+
+
 def startChatter():
     factory = ChatterBotFactory()
 
@@ -51,9 +58,7 @@ def startChatter():
 
 
 
-#startChatter()
 
 
-#removed token
 client.run("Mjc2MTM4NDk5NTU0NjcyNjUx.C3ZRBw.AkKdtU5dE1yXzd5dilX_OVvmNSU")
 
