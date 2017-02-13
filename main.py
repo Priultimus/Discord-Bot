@@ -10,8 +10,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    #print(str(client.user))
-
 
 @client.event
 async def on_message(message):
@@ -27,38 +25,27 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
 
+    elif message.content.startswith('!help'):
+        await client.send_message(message.channel, "To be implemented")
+
+    elif message.content.startswith("!random"):
+        if message.contains("Hello"):
+            await client.send_message(message.channel, "Not working yet")
+
     elif client.user.mentioned_in(message):
-        if str(message.author) == "Yakitrak#2464":
-            await client.send_message(message.channel, "Hey handsome!")
-
-        elif str(message.author) == "SquiddyDude#1177":
-            await client.send_message(message.channel, "Why are you here, Guy?")
-
-    #elif message.mentions:
-        #await client.send_message(message.channel, "I am clearly the best bot")
-
-
-
-
-
-def startChatter():
-    factory = ChatterBotFactory()
-
-    bot1 = factory.create(ChatterBotType.CLEVERBOT)
-    bot1session = bot1.create_session()
-
-    s = 'Hi'
-    while (1):
-        print('bot1> ' + s)
-
-        s = bot1session.think(s)
-        print('bot2> ' + s)
-
-        s = bot1session.think(s)
-
+        try:
+            if str(message.author) == "Yakitrak#2464":
+                factory = ChatterBotFactory()
+                bot1 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477")
+                bot1session = bot1.create_session()
+                msg = message.split()
+                for word in msg:
+                    if word == 
+                await client.send_message(message.channel, bot1session.think(message))
+        except:
+          await client.send_message(message.channel, "pandorabot api is down so you're seeing this message!")
 
 
 
 
 client.run("Mjc2MTM4NDk5NTU0NjcyNjUx.C3ZRBw.AkKdtU5dE1yXzd5dilX_OVvmNSU")
-
