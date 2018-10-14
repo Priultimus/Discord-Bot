@@ -40,7 +40,7 @@ async def on_message(message):
                 bot1session = bot1.create_session()
                 msg = message.split()
                 for word in msg:
-                    if word == 
+                    if word ==
                 await client.send_message(message.channel, bot1session.think(message))
         except:
           await client.send_message(message.channel, "pandorabot api is down so you're seeing this message!")
@@ -48,4 +48,4 @@ async def on_message(message):
 
 
 
-client.run("Mjc2MTM4NDk5NTU0NjcyNjUx.C3ZRBw.AkKdtU5dE1yXzd5dilX_OVvmNSU")
+client.run("")
