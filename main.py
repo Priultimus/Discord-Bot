@@ -63,4 +63,4 @@ async def on_ready():
     print('------')
 
 
-bot.run("MzE4MDcxOTU0ODk0NDg3NTY0.DqVENg.4e3DhtRmzYNl9EoqH53YldpLG8Q")
+bot.run("MzE4MDcxOTU0ODk0NDg3NTY0.DqVENg.4e3DhtRmzYNl9EoqH53YldpLG8Q") # this is what a token looks like, replace it with a real one
