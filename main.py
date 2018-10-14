@@ -1,51 +1,66 @@
 import discord
 import asyncio
+import logging
+from discord.ext import commands
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 
-client = discord.Client()
+logging.basicConfig(level=logging.INFO)
+bot = commands.Bot(command_prefix="!")
 
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-
-@client.event
-async def on_message(message):
-    if message.content.startswith("!messages"):
-        counter = 0
-        tmp = await client.send_message(message.channel, 'Calculating messages...')
-        async for log in client.logs_from(message.channel, limit=100):
-            if log.author == message.author:
+@bot.command()
+async def messages(ctx): # this is the same as what you did before
+    """Counts all the messages you have sent."""
+    counter = 0
+    tmp = await ctx.send("Calcuating messages...")
+    async with ctx.channel.typing(): # this makes the bot start typing.
+        async for log in ctx.channel.history(limit=100):
+            if log.author == ctx.author:
                 counter += 1
-        await client.edit_message(tmp, 'You have {} messages.'.format(counter))
+        await tmp.delete()
+        await ctx.send("Done! You have {} messages.".format(counter))
+        # sending a message stops bot typing.
 
-    elif message.content.startswith('!sleep'):
-        await asyncio.sleep(5)
-        await client.send_message(message.channel, 'Done sleeping')
+@bot.command()
+async def sleep(ctx, time: int=5):
+    """Makes the bot sleep for 5 seconds, or the seconds you provide."""
+    await asyncio.sleep(time)
+    await ctx.send("Done sleeping!")
 
-    elif message.content.startswith('!help'):
-        await client.send_message(message.channel, "To be implemented")
+@bot.command()
+async def random(ctx, message: str=None):
+    """I don't know what you want to do here"""
+    await ctx.send("Not working yet.")
 
-    elif message.content.startswith("!random"):
-        if message.contains("Hello"):
-            await client.send_message(message.channel, "Not working yet")
 
-    elif client.user.mentioned_in(message):
+@bot.event
+async def on_message(message):
+    await bot.process_commands(message)
+    if bot.user.mentioned_in(message):
         try:
             if str(message.author) == "Yakitrak#2464":
                 factory = ChatterBotFactory()
-                bot1 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477")
+                bot1 = factory.create(ChatterBotType.PANDORABOTS,
+                                      "b0dafd24ee35a477")
                 bot1session = bot1.create_session()
-                msg = message.split()
-                for word in msg:
-                    if word ==
-                await client.send_message(message.channel, bot1session.think(message))
+                # msg = message.content.split()
+                # for word in msg:
+                #    if word ==
+                # Didn't know what you wanted up there, so I commented it out.
+                await message.channel.send(bot1session.think(message.content))
         except:
-          await client.send_message(message.channel, "pandorabot api is down so you're seeing this message!")
+          await message.channel.send("The Pandorabot api is down "
+                                     "so you're seeing this message!")
 
 
+@bot.event
+async def on_ready():
+    print('Logged in as')
+    print(bot.user)
+    print("User ID:")
+    print(bot.user.id)
+    print("Number of servers/guilds:")
+    print(len(bot.guilds))
+    print('------')
 
 
-client.run("")
+bot.run("MzE4MDcxOTU0ODk0NDg3NTY0.DqVENg.4e3DhtRmzYNl9EoqH53YldpLG8Q")
